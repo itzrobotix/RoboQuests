@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "roboquests",
+	"version": "${version}",
+	"name": "RoboQuests",
+	"description": "This is a quests mod!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": ""
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/roboquests/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.robotix.roboquests.RoboQuests"
+		],
+		"client": [
+			"me.robotix.RoboQuestsClient"
+		],
+		"fabric-datagen": [
+			"me.robotix.RoboQuestsDataGenerator"
+		]
+	},
+	"mixins": [
+		"roboquests.mixins.json",
+		{
+			"config": "roboquests.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
