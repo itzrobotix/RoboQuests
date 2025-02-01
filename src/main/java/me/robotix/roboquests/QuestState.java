@@ -4,5 +4,6 @@ public enum QuestState {
     COMPLETED,
     ACTIVE,
     AVAILABLE,
-    LOCKED
+    LOCKED,
+    HIDDEN
 }

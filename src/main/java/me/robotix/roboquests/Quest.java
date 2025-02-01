@@ -9,9 +9,11 @@ public class Quest {
     private final String questStages;
     private final String questRewards;
 
+    private QuestState questState;
+
 
     public Quest(String questTitle, String questID, String questDescription,
-                 String questRequirements, String questStages, String questRewards) {
+                 String questRequirements, String questStages, String questRewards, QuestState questState) {
 
         this.questTitle = questTitle;
         this.questID = questID;
@@ -19,6 +21,7 @@ public class Quest {
         this.questRequirements = questRequirements;
         this.questStages = questStages;
         this.questRewards = questRewards;
+        this.questState = questState;
     }
 
     public String getQuestTitle() {
@@ -43,6 +46,14 @@ public class Quest {
 
     public String getQuestRewards() {
         return questRewards;
+    }
+
+    public QuestState getQuestState() {
+        return questState;
+    }
+
+    public void setQuestState(QuestState questState) {
+        this.questState = questState;
     }
 
 }
