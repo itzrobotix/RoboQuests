@@ -81,7 +81,7 @@ public final class QuestManager {
     }
 
     //Returns false if quest already exists or true if successful.
-    public static boolean addQuest(Quest quest) {
+    public static boolean createQuest(Quest quest) {
         if (quests.containsKey(quest.getQuestID())) {
             return false; //Quest already exists under this ID.
         }
