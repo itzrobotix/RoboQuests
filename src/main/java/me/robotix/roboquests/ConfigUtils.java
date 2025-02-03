@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.File;
 import java.io.FileReader;
@@ -11,19 +12,42 @@ import java.io.FileWriter;
 import java.io.Writer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ConfigUtils {
 
     private ConfigUtils() {}
 
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
     private static final List<File> MOD_CONFIG_FOLDERS = new ArrayList<>();
     private static final File CONFIGS_FOLDER = new File("config/roboquests");
-    private static final File QUESTS_FOLDER = new File(CONFIGS_FOLDER + "/quests/");
+    private static final File QUESTS_FOLDER = new File(CONFIGS_FOLDER + "/quests");
+    private static final File PLAYER_DATA_FOLDER = new File(CONFIGS_FOLDER + "/playerdata");
+
+    private static final Map<UUID, PlayerData> playersData = new HashMap<>();
+
+//    public static PlayerData getPlayerData(PlayerEntity player) {
+//        UUID playerUUID = player.getUuid();
+//        return playersData.computeIfAbsent(playerUUID, ConfigUtils::loadPlayerData);
+//    }
+
+    public static void savePlayerData(PlayerEntity player) {
+        UUID playerUUID = player.getUuid();
+        PlayerData playerData = playersData.get(playerUUID);
+
+        if (playerData != null) {
+            createConfigFolders();
+            File file = new File(PLAYER_DATA_FOLDER, playerUUID + ".json");
+
+            try (Writer writer = new FileWriter(file)) {
+                GSON.toJson(playerData, writer);
+                RoboQuests.LOGGER.info("Player Data saved: " + playerUUID);
+            } catch (Exception e) {
+                RoboQuests.LOGGER.error("Error saving Player Data: " + playerUUID);
+            }
+        }
+    }
 
     public static Map<String, Quest> loadQuests() {
         createConfigFolders();
