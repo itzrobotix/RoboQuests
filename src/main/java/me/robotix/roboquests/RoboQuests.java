@@ -17,7 +17,7 @@ public class RoboQuests implements ModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static MinecraftServer server;
+	public static MinecraftServer SERVER;
 
 	@Override
 	public void onInitialize() {

@@ -24,35 +24,35 @@ public class Quest {
         this.questState = questState;
     }
 
-    public String getQuestTitle() {
+    public String getTitle() {
         return questTitle;
     }
 
-    public String getQuestID() {
+    public String getID() {
         return questID;
     }
 
-    public String getQuestDescription() {
+    public String getDescription() {
         return questDescription;
     }
 
-    public String getQuestRequirements() {
+    public String getRequirements() {
         return questRequirements;
     }
 
-    public String getQuestStages() {
+    public String getStages() {
         return questStages;
     }
 
-    public String getQuestRewards() {
+    public String getRewards() {
         return questRewards;
     }
 
-    public QuestState getQuestState() {
+    public QuestState getState() {
         return questState;
     }
 
-    public void setQuestState(QuestState questState) {
+    public void setState(QuestState questState) {
         this.questState = questState;
     }
 

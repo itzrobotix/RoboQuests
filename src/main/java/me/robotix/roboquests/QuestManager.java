@@ -8,8 +8,8 @@ public final class QuestManager {
 
     private QuestManager() {}
 
-    private static final Map<String, Map<UUID, QuestState>> playerQuestRegistry = new HashMap<>();
-    private static final Map<String, Quest> quests = new HashMap<>();
+    private static final Map<String, Map<UUID, QuestState>> PLAYER_QUEST_REGISTRY = new HashMap<>();
+    private static final Map<String, Quest> QUESTS = new HashMap<>();
 
     public static void initQuests
             (String questTitle, String questID, String questDescription,
@@ -26,7 +26,7 @@ public final class QuestManager {
     //Adds a quest with a specified quest state to a players quest registry.
     public static boolean addQuestToPlayer(String questID, PlayerEntity player, QuestState questState) {
         UUID playerUUID = player.getUuid();
-        Map<UUID, QuestState> playerQuestStates = playerQuestRegistry.getOrDefault(questID, null);
+        Map<UUID, QuestState> playerQuestStates = PLAYER_QUEST_REGISTRY.getOrDefault(questID, null);
 
         if (playerQuestStates != null) {
             if (playerQuestStates.containsKey(playerUUID)) {
@@ -44,11 +44,11 @@ public final class QuestManager {
     public static boolean removeQuestForPlayer(String questID, PlayerEntity player) {
         UUID playerUUID = player.getUuid();
 
-        if (!playerQuestRegistry.containsKey(questID) || !playerQuestRegistry.get(questID).containsKey(playerUUID)) {
+        if (!PLAYER_QUEST_REGISTRY.containsKey(questID) || !PLAYER_QUEST_REGISTRY.get(questID).containsKey(playerUUID)) {
             return false;
         }
 
-        playerQuestRegistry.get(questID).remove(playerUUID);
+        PLAYER_QUEST_REGISTRY.get(questID).remove(playerUUID);
         return true;
     }
 
@@ -56,7 +56,7 @@ public final class QuestManager {
     public static QuestState getQuestStateForPlayer(String questID, PlayerEntity player) {
         UUID playerUUID = player.getUuid();
 
-        return playerQuestRegistry.getOrDefault
+        return PLAYER_QUEST_REGISTRY.getOrDefault
                 (questID, Collections.emptyMap()).getOrDefault(playerUUID, null);
     }
 
@@ -64,40 +64,40 @@ public final class QuestManager {
     public static boolean setQuestStateForPlayer(String questID, PlayerEntity player, QuestState newQuestState) {
         UUID playerUUID = player.getUuid();
 
-        if (!playerQuestRegistry.containsKey(questID) || !playerQuestRegistry.get(questID).containsKey(playerUUID)) {
+        if (!PLAYER_QUEST_REGISTRY.containsKey(questID) || !PLAYER_QUEST_REGISTRY.get(questID).containsKey(playerUUID)) {
             return false; //Quest or player not found.
         }
 
-        playerQuestRegistry.get(questID).put(playerUUID, newQuestState);
+        PLAYER_QUEST_REGISTRY.get(questID).put(playerUUID, newQuestState);
         return true; //Quest state updated for player.
     }
 
     public static Set<UUID> getPlayersAssignedToQuest(String questID) {
-        return playerQuestRegistry.getOrDefault(questID, Collections.emptyMap()).keySet();
+        return PLAYER_QUEST_REGISTRY.getOrDefault(questID, Collections.emptyMap()).keySet();
     }
 
     public static Map<String, Map<UUID, QuestState>> getPlayerQuestRegistry() {
-        return playerQuestRegistry;
+        return PLAYER_QUEST_REGISTRY;
     }
 
     //Returns false if quest already exists or true if successful.
     public static boolean createQuest(Quest quest) {
-        if (quests.containsKey(quest.getQuestID())) {
+        if (QUESTS.containsKey(quest.getID())) {
             return false; //Quest already exists under this ID.
         }
 
-        quests.put(quest.getQuestID(), quest);
+        QUESTS.put(quest.getID(), quest);
         return true;
     }
 
     //Returns true if quest is removed and false if quest doesn't exist.
     public static boolean deleteQuestByID(String questID) {
-        return quests.remove(questID) != null;
+        return QUESTS.remove(questID) != null;
     }
 
     //Returns null if quest not found.
     public static Quest getQuestByID(String questID) {
-        return quests.getOrDefault(questID, null);
+        return QUESTS.getOrDefault(questID, null);
     }
 
 }
