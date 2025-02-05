@@ -1,0 +1,86 @@
+package me.robotix.roboquests.playerdata;
+
+import static me.robotix.roboquests.utils.ConfigUtils.*;
+import net.minecraft.entity.player.PlayerEntity;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+public class PlayerDataManager {
+
+    private PlayerDataManager() {}
+
+    private static final String PLAYER_DATA_FOLDER_PATH = getConfigsFolder() + "/playerdata";
+
+    private static final Map<UUID, PlayerData> PLAYERS_DATA = new HashMap<>();
+
+    //Loads all player data JSON files.
+    public static void loadPlayerData() {
+        File[] files = getPlayerDataFolder().listFiles((dir, name) -> name.endsWith(".json"));
+
+        if (files != null) {
+            for (File file : files) {
+                UUID playerUUID = UUID.fromString(file.getName().replace(".json", ""));
+                PlayerData playerData = loadFromFile(file, PlayerData.class);
+
+                if (playerData != null) {
+                    PLAYERS_DATA.put(playerUUID, playerData);
+                }
+            }
+        }
+    }
+
+    //Create a new player data file.
+    public static boolean createPlayerData(PlayerEntity player) {
+        UUID playerUUID = player.getUuid();
+        File file = getPlayerFile(playerUUID);
+
+        if (file.exists()) {
+            return false;
+        }
+
+        PlayerData playerData = new PlayerData(playerUUID);
+        saveToFile(playerData, file);
+        return true;
+    }
+
+    //Saves an instance of player data to config file.
+    public static boolean savePlayerData(PlayerEntity player) {
+        UUID playerUUID = player.getUuid();
+        PlayerData playerData = getPlayerData(playerUUID);
+        File file = getPlayerFile(playerData.getPlayerUUID());
+
+        return saveToFile(playerData, file);
+    }
+
+    //Deletes a player's data file.
+    public static boolean deletePlayerData(PlayerEntity player) {
+        UUID playerUUID = player.getUuid();
+        File file = getPlayerFile(playerUUID);
+        boolean deleted = deleteFile(file);
+
+        if (deleted) {
+            PLAYERS_DATA.remove(playerUUID);
+        }
+
+        return deleted;
+    }
+
+    public static File getPlayerFile(UUID playerUUID) {
+        return new File(getPlayerDataFolder().getPath() + playerUUID + ".json");
+    }
+
+    public static File getPlayerDataFolder() {
+        return getAbsolutePath(PLAYER_DATA_FOLDER_PATH);
+    }
+
+    public static PlayerData getPlayerData(UUID playerUUID) {
+        return PLAYERS_DATA.get(playerUUID);
+    }
+
+    public static Map<UUID, PlayerData> getPlayersData() {
+        return PLAYERS_DATA;
+    }
+}

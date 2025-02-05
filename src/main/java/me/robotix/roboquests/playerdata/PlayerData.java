@@ -1,13 +1,18 @@
-package me.robotix.roboquests;
+package me.robotix.roboquests.playerdata;
+
+import me.robotix.roboquests.quests.Quest;
+import me.robotix.roboquests.quests.QuestProgress;
 
 import java.util.*;
 
 public class PlayerData {
 
+    private final UUID playerUUID;
     private List<String> completedQuests;
     private Map<String, QuestProgress> activeQuests;
 
-    public PlayerData() {
+    public PlayerData(UUID playerUUID) {
+        this.playerUUID = playerUUID;
         this.completedQuests = new ArrayList<>();
         this.activeQuests = new HashMap<>();
     }
@@ -35,6 +40,10 @@ public class PlayerData {
         if (activeQuests.containsKey(quest.getID())) {
             activeQuests.get(quest.getID()).setProgress(progress);
         }
+    }
+
+    public UUID getPlayerUUID() {
+        return playerUUID;
     }
 
 }
