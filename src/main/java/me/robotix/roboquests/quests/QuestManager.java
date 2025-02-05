@@ -1,29 +1,49 @@
 package me.robotix.roboquests.quests;
 
-import me.robotix.roboquests.utils.ConfigUtils;
+import static me.robotix.roboquests.playerdata.PlayerDataManager.*;
+import static me.robotix.roboquests.utils.ConfigUtils.*;
+
+import me.robotix.roboquests.playerdata.PlayerData;
 import net.minecraft.entity.player.PlayerEntity;
 
+import java.io.File;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class QuestManager {
 
     private QuestManager() {}
 
-    private static final String QUESTS_FOLDER_PATH = ConfigUtils.getConfigsFolder() + "/quests";
+    private static final String QUESTS_FOLDER_PATH = getConfigsFolder() + "/quests";
 
-    private static final Map<String, Map<UUID, QuestState>> PLAYER_QUEST_REGISTRY = new HashMap<>();
     private static final Map<String, Quest> QUESTS = new HashMap<>();
 
-    public static void initQuests
-            (String questTitle, String questID, String questDescription,
-             String questRequirements, String questStages, String questRewards, QuestState questState) {
+    //Loads all quest JSON files.
+    public static void loadQuests() {
+        QUESTS.clear();
 
-        Quest quest = new Quest
-                (questTitle, questID, questDescription, questRequirements, questStages, questRewards, questState);
+        File[] files = getQuestsFolder().listFiles((dir, name) -> name.endsWith(".json"));
 
-        //Add quests
+        if (files != null) {
+            for (File file : files) {
+                Quest quest = loadFromFile(file, Quest.class);
 
-        //Add quest logic
+                if (quest != null) {
+                    Map<UUID, QuestState> questStateRegistry = new HashMap<>();
+                    QUESTS.put(quest.getID(), quest);
+                }
+            }
+        }
+    }
+
+    //Returns all quests in the specified state for a player.
+    public List<String> getQuestsInStateForPlayer(PlayerEntity player, QuestState questState) {
+        PlayerData playerData = getPlayerData(player.getUuid());
+
+        return playerData.getQuestStates().entrySet().stream()
+                .filter(entry -> entry.getValue() == questState)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
     //    public static Map<String, Quest> loadQuests() {
@@ -97,62 +117,62 @@ public final class QuestManager {
 //        }
 //    }
 
-    //Adds a quest with a specified quest state to a players quest registry.
-    public static boolean addQuestToPlayer(String questID, PlayerEntity player, QuestState questState) {
-        UUID playerUUID = player.getUuid();
-        Map<UUID, QuestState> playerQuestStates = PLAYER_QUEST_REGISTRY.getOrDefault(questID, null);
-
-        if (playerQuestStates != null) {
-            if (playerQuestStates.containsKey(playerUUID)) {
-                return false; //Player already has quest.
-            }
-
-            playerQuestStates.put(playerUUID, questState);
-            return true;
-        }
-
-        return false;
-    }
-
-    //Remove quest from player.
-    public static boolean removeQuestForPlayer(String questID, PlayerEntity player) {
-        UUID playerUUID = player.getUuid();
-
-        if (!PLAYER_QUEST_REGISTRY.containsKey(questID) || !PLAYER_QUEST_REGISTRY.get(questID).containsKey(playerUUID)) {
-            return false;
-        }
-
-        PLAYER_QUEST_REGISTRY.get(questID).remove(playerUUID);
-        return true;
-    }
-
-    //Returns the quest state for specified quest and player.
-    public static QuestState getQuestStateForPlayer(String questID, PlayerEntity player) {
-        UUID playerUUID = player.getUuid();
-
-        return PLAYER_QUEST_REGISTRY.getOrDefault
-                (questID, Collections.emptyMap()).getOrDefault(playerUUID, null);
-    }
-
-    //Sets the quest state for specified quest and player.
-    public static boolean setQuestStateForPlayer(String questID, PlayerEntity player, QuestState newQuestState) {
-        UUID playerUUID = player.getUuid();
-
-        if (!PLAYER_QUEST_REGISTRY.containsKey(questID) || !PLAYER_QUEST_REGISTRY.get(questID).containsKey(playerUUID)) {
-            return false; //Quest or player not found.
-        }
-
-        PLAYER_QUEST_REGISTRY.get(questID).put(playerUUID, newQuestState);
-        return true; //Quest state updated for player.
-    }
-
-    public static Set<UUID> getPlayersAssignedToQuest(String questID) {
-        return PLAYER_QUEST_REGISTRY.getOrDefault(questID, Collections.emptyMap()).keySet();
-    }
-
-    public static Map<String, Map<UUID, QuestState>> getPlayerQuestRegistry() {
-        return PLAYER_QUEST_REGISTRY;
-    }
+//    //Adds a quest with a specified quest state to a players quest registry.
+//    public static boolean addQuestToPlayer(String questID, PlayerEntity player, QuestState questState) {
+//        UUID playerUUID = player.getUuid();
+//        Map<UUID, QuestState> playerQuestStates = PLAYER_QUEST_STATE_REGISTRY.getOrDefault(questID, null);
+//
+//        if (playerQuestStates != null) {
+//            if (playerQuestStates.containsKey(playerUUID)) {
+//                return false; //Player already has quest.
+//            }
+//
+//            playerQuestStates.put(playerUUID, questState);
+//            return true;
+//        }
+//
+//        return false;
+//    }
+//
+//    //Remove quest from player.
+//    public static boolean removeQuestForPlayer(String questID, PlayerEntity player) {
+//        UUID playerUUID = player.getUuid();
+//
+//        if (!PLAYER_QUEST_STATE_REGISTRY.containsKey(questID) || !PLAYER_QUEST_STATE_REGISTRY.get(questID).containsKey(playerUUID)) {
+//            return false;
+//        }
+//
+//        PLAYER_QUEST_STATE_REGISTRY.get(questID).remove(playerUUID);
+//        return true;
+//    }
+//
+//    //Returns the quest state for specified quest and player.
+//    public static QuestState getQuestStateForPlayer(String questID, PlayerEntity player) {
+//        UUID playerUUID = player.getUuid();
+//
+//        return PLAYER_QUEST_STATE_REGISTRY.getOrDefault
+//                (questID, Collections.emptyMap()).getOrDefault(playerUUID, null);
+//    }
+//
+//    //Sets the quest state for specified quest and player.
+//    public static boolean setQuestStateForPlayer(String questID, PlayerEntity player, QuestState newQuestState) {
+//        UUID playerUUID = player.getUuid();
+//
+//        if (!PLAYER_QUEST_STATE_REGISTRY.containsKey(questID) || !PLAYER_QUEST_STATE_REGISTRY.get(questID).containsKey(playerUUID)) {
+//            return false; //Quest or player not found.
+//        }
+//
+//        PLAYER_QUEST_STATE_REGISTRY.get(questID).put(playerUUID, newQuestState);
+//        return true; //Quest state updated for player.
+//    }
+//
+//    public static Set<UUID> getPlayersAssignedToQuest(String questID) {
+//        return PLAYER_QUEST_STATE_REGISTRY.getOrDefault(questID, Collections.emptyMap()).keySet();
+//    }
+//
+//    public static Map<String, Map<UUID, QuestState>> getPlayerQuestRegistry() {
+//        return PLAYER_QUEST_STATE_REGISTRY;
+//    }
 
     //Returns false if quest already exists or true if successful.
     public static boolean createQuest(Quest quest) {
@@ -174,4 +194,7 @@ public final class QuestManager {
         return QUESTS.getOrDefault(questID, null);
     }
 
+    public static File getQuestsFolder() {
+        return getAbsolutePath(QUESTS_FOLDER_PATH);
+    }
 }

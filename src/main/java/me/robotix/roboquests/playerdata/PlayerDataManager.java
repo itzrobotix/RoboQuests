@@ -1,6 +1,9 @@
 package me.robotix.roboquests.playerdata;
 
 import static me.robotix.roboquests.utils.ConfigUtils.*;
+
+import me.robotix.roboquests.quests.Quest;
+import me.robotix.roboquests.quests.QuestState;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.File;
@@ -15,9 +18,12 @@ public class PlayerDataManager {
     private static final String PLAYER_DATA_FOLDER_PATH = getConfigsFolder() + "/playerdata";
 
     private static final Map<UUID, PlayerData> PLAYERS_DATA = new HashMap<>();
+    private static final Map<String, Map<UUID, QuestState>> PLAYER_QUEST_STATE_REGISTRY = new HashMap<>();
 
     //Loads all player data JSON files.
     public static void loadPlayerData() {
+        PLAYERS_DATA.clear();
+
         File[] files = getPlayerDataFolder().listFiles((dir, name) -> name.endsWith(".json"));
 
         if (files != null) {
@@ -27,6 +33,15 @@ public class PlayerDataManager {
 
                 if (playerData != null) {
                     PLAYERS_DATA.put(playerUUID, playerData);
+
+                    for (Map.Entry<String, QuestState> entry : playerData.getQuestStates().entrySet()) {
+                        String questID = entry.getKey();
+                        QuestState questState = entry.getValue();
+
+                        PLAYER_QUEST_STATE_REGISTRY
+                                .computeIfAbsent(questID, k -> new HashMap<>())
+                                .put(playerUUID, questState);
+                    }
                 }
             }
         }
