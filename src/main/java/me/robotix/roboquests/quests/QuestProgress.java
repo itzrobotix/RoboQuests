@@ -2,28 +2,18 @@ package me.robotix.roboquests.quests;
 
 public class QuestProgress {
 
-    private int progress;
-    private String status;
+    private int questProgressStages;
 
     public QuestProgress() {
-        this.progress = 0;
-        this.status = "in_progress";
+        this.questProgressStages = 0;
     }
 
     public int getProgress() {
-        return progress;
+        return questProgressStages;
     }
 
     public void setProgress(int progress) {
-        this.progress = progress;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void complete() {
-        this.status = "complete";
+        this.questProgressStages = progress;
     }
 
 }

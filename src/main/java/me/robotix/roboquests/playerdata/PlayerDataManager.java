@@ -3,6 +3,7 @@ package me.robotix.roboquests.playerdata;
 import static me.robotix.roboquests.utils.ConfigUtils.*;
 
 import me.robotix.roboquests.quests.Quest;
+import me.robotix.roboquests.quests.QuestProgress;
 import me.robotix.roboquests.quests.QuestState;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -18,7 +19,7 @@ public class PlayerDataManager {
     private static final String PLAYER_DATA_FOLDER_PATH = getConfigsFolder() + "/playerdata";
 
     private static final Map<UUID, PlayerData> PLAYERS_DATA = new HashMap<>();
-    private static final Map<String, Map<UUID, QuestState>> PLAYER_QUEST_STATE_REGISTRY = new HashMap<>();
+    private static final Map<UUID, Map<String, QuestState>> PLAYER_QUEST_STATE_REGISTRY = new HashMap<>();
 
     //Loads all player data JSON files.
     public static void loadPlayerData() {
@@ -39,8 +40,8 @@ public class PlayerDataManager {
                         QuestState questState = entry.getValue();
 
                         PLAYER_QUEST_STATE_REGISTRY
-                                .computeIfAbsent(questID, k -> new HashMap<>())
-                                .put(playerUUID, questState);
+                                .computeIfAbsent(playerUUID, k -> new HashMap<>())
+                                .put(questID, questState);
                     }
                 }
             }
@@ -81,6 +82,13 @@ public class PlayerDataManager {
         }
 
         return deleted;
+    }
+
+    //Returns a specified quest's progress for a player.
+    public static QuestProgress getPlayerQuestProgress(PlayerEntity player, Quest quest) {
+        UUID playerUUID = player.getUuid();
+        PlayerData playerData = getPlayerData(playerUUID);
+        return playerData.getActiveQuestsProgress().get(quest.getID());
     }
 
     public static File getPlayerFile(UUID playerUUID) {

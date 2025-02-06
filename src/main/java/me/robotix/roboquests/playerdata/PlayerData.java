@@ -25,7 +25,7 @@ public class PlayerData {
         return questStates;
     }
 
-    public Map<String, QuestProgress> getActiveQuests() {
+    public Map<String, QuestProgress> getActiveQuestsProgress() {
         return activeQuestsProgress;
     }
 
