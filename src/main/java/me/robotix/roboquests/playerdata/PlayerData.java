@@ -1,6 +1,6 @@
 package me.robotix.roboquests.playerdata;
 
-import me.robotix.roboquests.quests.QuestProgress;
+import me.robotix.roboquests.quests.tasks.QuestTasks;
 import me.robotix.roboquests.quests.QuestState;
 
 import java.util.*;
@@ -9,7 +9,7 @@ public class PlayerData {
 
     private final UUID playerUUID;
     private final Map<String, QuestState> questStates;
-    private final Map<String, QuestProgress> activeQuestsProgress;
+    private final Map<String, QuestTasks> activeQuestsProgress;
 
     public PlayerData(UUID playerUUID) {
         this.playerUUID = playerUUID;
@@ -25,7 +25,7 @@ public class PlayerData {
         return questStates;
     }
 
-    public Map<String, QuestProgress> getActiveQuestsProgress() {
+    public Map<String, QuestTasks> getActiveQuestsProgress() {
         return activeQuestsProgress;
     }
 

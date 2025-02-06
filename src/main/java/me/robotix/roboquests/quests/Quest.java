@@ -1,32 +1,34 @@
 package me.robotix.roboquests.quests;
 
+import me.robotix.roboquests.quests.tasks.QuestTasks;
+
+import java.util.List;
+
 public class Quest {
 
-    private final String questTitle;
+    private final String questDisplayName;
     private final String questID;
     private final String questDescription;
-    private final String questRequirements;
+    private final List<QuestTasks> questTasks;
     private final String questRewards;
 
-    private QuestProgress questProgress;
-    private QuestState questState;
+    private boolean isQuestRepeatable;
 
 
-    public Quest(String questTitle, String questID, String questDescription,
-                 String questRequirements, String questStages, String questRewards,
-                 QuestProgress questProgress, QuestState questState) {
-
-        this.questTitle = questTitle;
+    public Quest(String questDisplayName,
+             String questID,
+             String questDescription,
+             List<QuestTasks> questTasks,
+             String questRewards) {
+        this.questDisplayName = questDisplayName;
         this.questID = questID;
         this.questDescription = questDescription;
-        this.questRequirements = questRequirements;
+        this.questTasks = questTasks;
         this.questRewards = questRewards;
-        this.questProgress = questProgress;
-        this.questState = questState;
     }
 
     public String getTitle() {
-        return questTitle;
+        return questDisplayName;
     }
 
     public String getID() {
@@ -37,24 +39,19 @@ public class Quest {
         return questDescription;
     }
 
-    public String getRequirements() {
-        return questRequirements;
+    public List<QuestTasks> getStages() {
+        return questTasks;
     }
 
     public String getRewards() {
         return questRewards;
     }
 
-    public QuestProgress getStages() {
-        return questProgress;
+    public boolean isQuestRepeatable() {
+        return isQuestRepeatable;
     }
 
-    public QuestState getState() {
-        return questState;
+    public void setIsQuestRepeatable(boolean repeatable) {
+        isQuestRepeatable = repeatable;
     }
-
-    public void setState(QuestState questState) {
-        this.questState = questState;
-    }
-
 }

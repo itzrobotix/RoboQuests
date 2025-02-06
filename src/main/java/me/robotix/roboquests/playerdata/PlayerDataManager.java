@@ -3,7 +3,7 @@ package me.robotix.roboquests.playerdata;
 import static me.robotix.roboquests.utils.ConfigUtils.*;
 
 import me.robotix.roboquests.quests.Quest;
-import me.robotix.roboquests.quests.QuestProgress;
+import me.robotix.roboquests.quests.tasks.QuestTasks;
 import me.robotix.roboquests.quests.QuestState;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -85,7 +85,7 @@ public class PlayerDataManager {
     }
 
     //Returns a specified quest's progress for a player.
-    public static QuestProgress getPlayerQuestProgress(PlayerEntity player, Quest quest) {
+    public static QuestTasks getPlayerQuestProgress(PlayerEntity player, Quest quest) {
         UUID playerUUID = player.getUuid();
         PlayerData playerData = getPlayerData(playerUUID);
         return playerData.getActiveQuestsProgress().get(quest.getID());

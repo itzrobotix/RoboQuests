@@ -1,4 +1,5 @@
 package me.robotix.roboquests.quests;
 
-public class QuestObjective {
+public enum QuestAction {
+    KILL_MOB,
 }
