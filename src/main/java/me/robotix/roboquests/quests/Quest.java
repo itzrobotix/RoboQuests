@@ -1,6 +1,6 @@
 package me.robotix.roboquests.quests;
 
-import me.robotix.roboquests.quests.tasks.QuestTasks;
+import me.robotix.roboquests.quests.task.QuestTasks;
 
 import java.util.List;
 

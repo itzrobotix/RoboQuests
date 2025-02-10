@@ -1,4 +1,4 @@
-package me.robotix.roboquests.quests.tasks;
+package me.robotix.roboquests.quests.task;
 
 public class QuestTask {
 
