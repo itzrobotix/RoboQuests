@@ -7,6 +7,7 @@ import me.robotix.roboquests.playerdata.PlayerData;
 import me.robotix.roboquests.quests.utils.Quest;
 import me.robotix.roboquests.quests.utils.QuestState;
 import net.minecraft.entity.player.PlayerEntity;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.*;
@@ -20,7 +21,9 @@ public final class QuestManager {
 
     private static final Map<String, Quest> QUESTS = new HashMap<>();
 
-    //Loads all quest JSON files.
+    /**
+     * Loads all quest JSON files.
+     */
     public static void loadQuests() {
         QUESTS.clear();
 
@@ -38,7 +41,14 @@ public final class QuestManager {
         }
     }
 
-    //Returns the quest state for the specified quest and player if present.
+    /**
+     * Returns the quest state for the specified quest and player.
+     *
+     * @param player The specified player.
+     * @param quest The specified quest.
+     * @return The QuestState object.
+     * @throws NullPointerException if no QuestState is found.
+     */
     public QuestState getQuestStateForPlayer(PlayerEntity player, Quest quest) {
         PlayerData playerData = getPlayerData(player.getUuid());
 
@@ -49,7 +59,13 @@ public final class QuestManager {
                 .orElseThrow(NullPointerException::new);
     }
 
-    //Returns all quests in the specified state for a player.
+    /**
+     * Returns all quests for a player in the specified state.
+     *
+     * @param player The specified player.
+     * @param questState The specified QuestState.
+     * @return A list containing all modIDs found matching QuestState.
+     */
     public List<String> getQuestsInStateForPlayer(PlayerEntity player, QuestState questState) {
         PlayerData playerData = getPlayerData(player.getUuid());
 
@@ -187,7 +203,12 @@ public final class QuestManager {
 //        return PLAYER_QUEST_STATE_REGISTRY;
 //    }
 
-    //Returns false if quest already exists or true if successful.
+    /**
+     * Creates a Quest object and adds it to collection of quests.
+     *
+     * @param quest
+     * @return True if quest is created, false if quest already exists.
+     */
     public static boolean createQuest(Quest quest) {
         if (QUESTS.containsKey(quest.getID())) {
             return false; //Quest already exists under this ID.
@@ -197,12 +218,21 @@ public final class QuestManager {
         return true;
     }
 
-    //Returns true if quest is removed and false if quest doesn't exist.
+    /**
+     * Deletes a Quest file and removes it from collection of quests.
+     *
+     * @param questID The Quest ID to match.
+     * @return True if quest is deleted, false if quest doesn't exist.
+     */
     public static boolean deleteQuestByID(String questID) {
+        //Add logic to delete quest file.
         return QUESTS.remove(questID) != null;
     }
 
-    //Returns null if quest not found.
+    /**
+     * @param questID The Quest ID to match.
+     * @return The Quest object if exists or null.
+     */
     public static Quest getQuestByID(String questID) {
         return QUESTS.getOrDefault(questID, null);
     }
