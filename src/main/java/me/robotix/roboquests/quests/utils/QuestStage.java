@@ -1,6 +1,5 @@
 package me.robotix.roboquests.quests.utils;
 
-import me.robotix.roboquests.quests.task.QuestTask;
 import me.robotix.roboquests.quests.task.QuestTasks;
 
 import java.util.List;
@@ -10,6 +9,11 @@ public class QuestStage {
 
     private QuestTasks taskSet;
     private List<QuestRequirement> stageRequirements;
+
+    public QuestStage(QuestTasks taskSet, List<QuestRequirement> stageRequirements) {
+        this.taskSet = taskSet;
+        this.stageRequirements = stageRequirements;
+    }
 
     public QuestTasks getTaskSet() {
         return taskSet;

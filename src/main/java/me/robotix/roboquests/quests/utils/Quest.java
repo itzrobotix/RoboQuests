@@ -1,6 +1,4 @@
-package me.robotix.roboquests.quests;
-
-import me.robotix.roboquests.quests.utils.QuestStage;
+package me.robotix.roboquests.quests.utils;
 
 import java.util.List;
 
