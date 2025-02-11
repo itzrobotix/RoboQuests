@@ -1,5 +1,6 @@
 package me.robotix.roboquests.quests.task;
 
+//Contains a list of available task types.
 public enum QuestTaskType {
     BREAK_BLOCK,
     PLACE_BLOCK,

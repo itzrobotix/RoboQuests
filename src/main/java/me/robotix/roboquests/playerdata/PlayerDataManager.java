@@ -4,7 +4,7 @@ import static me.robotix.roboquests.utils.ConfigUtils.*;
 
 import me.robotix.roboquests.quests.Quest;
 import me.robotix.roboquests.quests.task.QuestTasks;
-import me.robotix.roboquests.quests.stage.QuestState;
+import me.robotix.roboquests.quests.utils.QuestState;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.File;

@@ -1,6 +1,7 @@
-package me.robotix.roboquests.quests.stage;
+package me.robotix.roboquests.quests.utils;
 
-public enum QuestStageRequirement {
+//Contains a list of all requirements that can be used.
+public enum QuestRequirement {
     HAVE_PERMISSION,
     HAVE_ITEM,
     HOLDING_ITEM,

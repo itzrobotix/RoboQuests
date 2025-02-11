@@ -1,6 +1,6 @@
 package me.robotix.roboquests.quests;
 
-import me.robotix.roboquests.quests.task.QuestTasks;
+import me.robotix.roboquests.quests.utils.QuestStage;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ public class Quest {
     private final String questDisplayName;
     private final String questID;
     private final String questDescription;
-    private final List<QuestTasks> questTasks;
-    private final String questRewards;
+    private final List<QuestStage> questStages;
+    private final List<String> questRewards;
 
     private boolean isQuestRepeatable;
 
@@ -18,12 +18,12 @@ public class Quest {
     public Quest(String questDisplayName,
              String questID,
              String questDescription,
-             List<QuestTasks> questTasks,
-             String questRewards) {
+             List<QuestStage> questStages,
+             List<String> questRewards) {
         this.questDisplayName = questDisplayName;
         this.questID = questID;
         this.questDescription = questDescription;
-        this.questTasks = questTasks;
+        this.questStages = questStages;
         this.questRewards = questRewards;
     }
 
@@ -39,11 +39,11 @@ public class Quest {
         return questDescription;
     }
 
-    public List<QuestTasks> getStages() {
-        return questTasks;
+    public List<QuestStage> getStages() {
+        return questStages;
     }
 
-    public String getRewards() {
+    public List<String> getRewards() {
         return questRewards;
     }
 

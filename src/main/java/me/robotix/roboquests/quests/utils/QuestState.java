@@ -1,4 +1,4 @@
-package me.robotix.roboquests.quests.stage;
+package me.robotix.roboquests.quests.utils;
 
 public enum QuestState {
     COMPLETED,
