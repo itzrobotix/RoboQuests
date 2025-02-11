@@ -38,8 +38,16 @@ public final class QuestManager {
         }
     }
 
-    //Method for getting state of quest for player.
-    //Method for setting state of quest for player.
+    //Returns the quest state for the specified quest and player if present.
+    public QuestState getQuestStateForPlayer(PlayerEntity player, Quest quest) {
+        PlayerData playerData = getPlayerData(player.getUuid());
+
+        return playerData.getQuestStates().entrySet().stream()
+                .filter(entry -> entry.getKey().equals(quest.getID()))
+                .map(Map.Entry::getValue)
+                .findFirst()
+                .orElseThrow(NullPointerException::new);
+    }
 
     //Returns all quests in the specified state for a player.
     public List<String> getQuestsInStateForPlayer(PlayerEntity player, QuestState questState) {
