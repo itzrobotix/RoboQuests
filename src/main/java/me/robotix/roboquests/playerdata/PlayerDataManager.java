@@ -3,7 +3,7 @@ package me.robotix.roboquests.playerdata;
 import static me.robotix.roboquests.utils.ConfigUtils.*;
 
 import me.robotix.roboquests.quests.utils.Quest;
-import me.robotix.roboquests.quests.task.QuestTasks;
+import me.robotix.roboquests.quests.utils.QuestStage;
 import me.robotix.roboquests.quests.utils.QuestState;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -21,7 +21,9 @@ public class PlayerDataManager {
     private static final Map<UUID, PlayerData> PLAYERS_DATA = new HashMap<>();
     private static final Map<UUID, Map<String, QuestState>> PLAYER_QUEST_STATE_REGISTRY = new HashMap<>();
 
-    //Loads all player data JSON files.
+    /**
+     * Loads all player data JSON files.
+     */
     public static void loadPlayerData() {
         PLAYERS_DATA.clear();
 
@@ -48,30 +50,40 @@ public class PlayerDataManager {
         }
     }
 
-    //Create a new player data file.
+    /**
+     * Creates a new player data file.
+     *
+     * @param player The player specified for creating their data.
+     * @return True if file created successfully, false if error with file creation.
+     */
     public static boolean createPlayerData(PlayerEntity player) {
         UUID playerUUID = player.getUuid();
         File file = getPlayerFile(playerUUID);
-
-        if (file.exists()) {
-            return false;
-        }
-
         PlayerData playerData = new PlayerData(playerUUID);
-        saveToFile(playerData, file);
-        return true;
+
+        return saveToFile(file, playerData);
     }
 
-    //Saves an instance of player data to config file.
+    /**
+     * Saves player data to file.
+     *
+     * @param player The player specified for saving their data.
+     * @return True if file saved successfully, false if error with saving.
+     */
     public static boolean savePlayerData(PlayerEntity player) {
         UUID playerUUID = player.getUuid();
         PlayerData playerData = getPlayerData(playerUUID);
         File file = getPlayerFile(playerData.getPlayerUUID());
 
-        return saveToFile(playerData, file);
+        return saveToFile(file, playerData);
     }
 
-    //Deletes a player's data file.
+    /**
+     * Deletes a player data file.
+     *
+     * @param player The player specified for deleting data.
+     * @return True if file deleted successfully, false if there was an error.
+     */
     public static boolean deletePlayerData(PlayerEntity player) {
         UUID playerUUID = player.getUuid();
         File file = getPlayerFile(playerUUID);
@@ -84,8 +96,12 @@ public class PlayerDataManager {
         return deleted;
     }
 
-    //Returns a specified quest's progress for a player.
-    public static QuestTasks getPlayerQuestProgress(PlayerEntity player, Quest quest) {
+    /**
+     * @param player The player's quest progress to find.
+     * @param quest The quest to search for its progress.
+     * @return The QuestStage instance.
+     */
+    public static QuestStage getPlayerQuestProgress(PlayerEntity player, Quest quest) {
         UUID playerUUID = player.getUuid();
         PlayerData playerData = getPlayerData(playerUUID);
         return playerData.getActiveQuestsProgress().get(quest.getID());

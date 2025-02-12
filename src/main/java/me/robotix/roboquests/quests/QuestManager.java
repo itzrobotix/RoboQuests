@@ -46,7 +46,7 @@ public final class QuestManager {
      *
      * @param player The specified player.
      * @param quest The specified quest.
-     * @return The QuestState object.
+     * @return The QuestState.
      * @throws NullPointerException if no QuestState is found.
      */
     public QuestState getQuestStateForPlayer(PlayerEntity player, Quest quest) {

@@ -15,8 +15,15 @@ public class ConfigUtils {
 
     private static final String CONFIGS_FOLDER_PATH = "config/roboquests";
 
-    //Saves provided data to specified file.
-    public static <T> boolean saveToFile(T data, File file) {
+    /**
+     * Saves data to file.
+     *
+     * @param file The file to create and save.
+     * @param data Generic data type to save.
+     * @return True if data was saved successfully, false if there was an error.
+     * @param <T> Support for generic data type to be saved.
+     */
+    public static <T> boolean saveToFile(File file, T data) {
         createDefaultFolder();
         file = ensureJsonFile(file);
 
@@ -36,6 +43,15 @@ public class ConfigUtils {
     }
 
     //Loads requested data from specified file.
+
+    /**
+     * Loads data from file.
+     *
+     * @param file The file to load.
+     * @param clazz The generic class instance to create from loaded data.
+     * @return The generic type of data loaded.
+     * @param <T> Supports generic data types.
+     */
     public static <T> T loadFromFile(File file, Class<T> clazz) {
         createDefaultFolder();
         file = ensureJsonFile(file);
@@ -53,13 +69,23 @@ public class ConfigUtils {
         }
     }
 
-    //Deletes specified file.
+    /**
+     * Deletes specified file.
+     *
+     * @param file The file to delete.
+     * @return True if file existed and was deleted successfully, false otherwise.
+     */
     public static boolean deleteFile(File file) {
         file = ensureJsonFile(file);
         return file.exists() && file.delete();
     }
 
-    //Ensures files are all JSON files.
+    /**
+     * A method to ensure a file is JSON formatted.
+     *
+     * @param file The file to check.
+     * @return The file if JSON, or the file converted to JSON.
+     */
     private static File ensureJsonFile(File file) {
         if (!file.getName().endsWith(".json")) {
             return new File(file.getParent(), file.getName() + ".json");
