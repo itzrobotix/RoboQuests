@@ -204,14 +204,14 @@ public final class QuestManager {
 //    }
 
     /**
-     * Creates a Quest object and adds it to collection of quests.
+     * Takes a Quest object and adds it to collection of quests.
      *
-     * @param quest
+     * @param quest The Quest to create.
      * @return True if quest is created, false if quest already exists.
      */
     public static boolean createQuest(Quest quest) {
         if (QUESTS.containsKey(quest.getID())) {
-            return false; //Quest already exists under this ID.
+            return false;
         }
 
         QUESTS.put(quest.getID(), quest);
