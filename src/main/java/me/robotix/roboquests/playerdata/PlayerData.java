@@ -5,6 +5,9 @@ import me.robotix.roboquests.quests.utils.QuestState;
 
 import java.util.*;
 
+/**
+ * Represents an instance of one player's data.
+ */
 public class PlayerData {
 
     private final UUID playerUUID;

@@ -2,13 +2,21 @@ package me.robotix.roboquests.quests.task;
 
 import java.util.List;
 
-//Contains a list of QuestTask to used for defining a QuestStage.
-public class QuestTasks {
+/**
+ * Contains a list of QuestTask to used for defining a QuestStage.
+ */
+public class QuestTaskSet {
 
+    private final String taskSetID;
     private final List<QuestTask> taskSet;
 
-    public QuestTasks(List<QuestTask> tasks) {
+    public QuestTaskSet(String taskSetID, List<QuestTask> tasks) {
+        this.taskSetID = taskSetID;
         this.taskSet = tasks;
+    }
+
+    public String getTaskSetID() {
+        return taskSetID;
     }
 
     public List<QuestTask> getTasks() {

@@ -1,6 +1,8 @@
 package me.robotix.roboquests.quests.utils;
 
-//Contains a list of all requirements that can be used.
+/**
+ * Contains a list of all requirements that can be used.
+ */
 public enum QuestRequirement {
     HAVE_PERMISSION,
     HAVE_ITEM,

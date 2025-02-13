@@ -4,7 +4,9 @@ import me.robotix.roboquests.quests.utils.QuestRequirement;
 
 import java.util.List;
 
-//Contains an instance of a singular task in a set of tasks for a quest.
+/**
+ * Contains an instance of a singular task in a set of tasks for a quest.
+ */
 public class QuestTask {
 
     private final String taskID;

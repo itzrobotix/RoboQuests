@@ -2,6 +2,9 @@ package me.robotix.roboquests.quests.utils;
 
 import java.util.List;
 
+/**
+ * Represents an instance of one quest.
+ */
 public class Quest {
 
     private final String questDisplayName;
