@@ -1,4 +1,4 @@
-package me.robotix.roboquests.quests.task;
+package me.robotix.roboquests.quests.utils;
 
 /**
  * Contains a list of available task types.

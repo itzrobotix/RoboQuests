@@ -2,8 +2,8 @@ package me.robotix.roboquests.playerdata;
 
 import static me.robotix.roboquests.utils.ConfigUtils.*;
 
-import me.robotix.roboquests.quests.utils.Quest;
-import me.robotix.roboquests.quests.utils.QuestStage;
+import me.robotix.roboquests.quests.Quest;
+import me.robotix.roboquests.quests.QuestStage;
 import me.robotix.roboquests.quests.utils.QuestState;
 import net.minecraft.entity.player.PlayerEntity;
 

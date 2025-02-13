@@ -1,6 +1,7 @@
-package me.robotix.roboquests.quests.task;
+package me.robotix.roboquests.quests;
 
 import me.robotix.roboquests.quests.utils.QuestRequirement;
+import me.robotix.roboquests.quests.utils.QuestTaskType;
 
 import java.util.List;
 

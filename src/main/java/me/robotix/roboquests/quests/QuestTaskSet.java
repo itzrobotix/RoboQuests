@@ -1,4 +1,4 @@
-package me.robotix.roboquests.quests.task;
+package me.robotix.roboquests.quests;
 
 import java.util.List;
 

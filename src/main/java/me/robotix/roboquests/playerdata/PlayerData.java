@@ -1,6 +1,6 @@
 package me.robotix.roboquests.playerdata;
 
-import me.robotix.roboquests.quests.utils.QuestStage;
+import me.robotix.roboquests.quests.QuestStage;
 import me.robotix.roboquests.quests.utils.QuestState;
 
 import java.util.*;
