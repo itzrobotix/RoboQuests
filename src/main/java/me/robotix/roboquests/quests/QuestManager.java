@@ -32,7 +32,6 @@ public final class QuestManager {
                 Quest quest = loadFromFile(file, Quest.class);
 
                 if (quest != null) {
-                    Map<UUID, QuestState> questStateRegistry = new HashMap<>();
                     QUESTS.put(quest.getID(), quest);
                 }
             }

@@ -9,8 +9,8 @@ import java.util.Map;
 
 public class QuestStageProgress {
 
-    @Expose private final String stageID;
-    @Expose private final Map<String, QuestTaskSetProgress> taskSetProgress = new HashMap<>();
+    private final String stageID;
+    private final Map<String, QuestTaskSetProgress> taskSetProgress = new HashMap<>();
 
     public QuestStageProgress(QuestStage questStage) {
         this.stageID = questStage.stageID();

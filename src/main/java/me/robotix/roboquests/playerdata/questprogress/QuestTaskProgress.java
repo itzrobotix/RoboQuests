@@ -7,8 +7,8 @@ public class QuestTaskProgress {
 
     private final QuestTask questTask;
 
-    @Expose private final String taskID;
-    @Expose private int progress;
+    private final String taskID;
+    private int progress;
 
     public QuestTaskProgress(QuestTask questTask) {
         this.taskID = questTask.taskID();

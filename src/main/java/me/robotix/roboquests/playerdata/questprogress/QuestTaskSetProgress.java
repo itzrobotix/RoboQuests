@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class QuestTaskSetProgress {
 
-    @Expose private final String taskSetID;
-    @Expose private int tasksToComplete;
-    @Expose private final Map<String, QuestTaskProgress> taskProgress = new HashMap<>();
+    private final String taskSetID;
+    private int tasksToComplete;
+    private final Map<String, QuestTaskProgress> taskProgress = new HashMap<>();
 
     public QuestTaskSetProgress(QuestTaskSet questTaskSet) {
         this.taskSetID = questTaskSet.taskSetID();

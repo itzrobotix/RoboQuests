@@ -1,14 +1,17 @@
 package me.robotix.roboquests.quests;
 
+import me.robotix.roboquests.quests.utils.QuestState;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents an instance of one quest.
  */
 public class Quest {
 
+    private final transient String questID;
     private final String questDisplayName;
-    private final String questID;
     private final String questDescription;
     private final List<QuestStage> questStages;
     private final List<String> questRewards;
@@ -16,24 +19,26 @@ public class Quest {
     private boolean isQuestRepeatable;
 
 
-    public Quest(String questDisplayName,
-             String questID,
-             String questDescription,
-             List<QuestStage> questStages,
-             List<String> questRewards) {
-        this.questDisplayName = questDisplayName;
+    public Quest(String questID,
+                 String questDisplayName,
+                 String questDescription,
+                 List<QuestStage> questStages,
+                 List<String> questRewards,
+                 boolean isQuestRepeatable) {
         this.questID = questID;
+        this.questDisplayName = questDisplayName;
         this.questDescription = questDescription;
         this.questStages = questStages;
         this.questRewards = questRewards;
-    }
-
-    public String getTitle() {
-        return questDisplayName;
+        this.isQuestRepeatable = isQuestRepeatable;
     }
 
     public String getID() {
         return questID;
+    }
+
+    public String getTitle() {
+        return questDisplayName;
     }
 
     public String getDescription() {

@@ -1,6 +1,6 @@
 package me.robotix.roboquests.playerdata;
 
-import me.robotix.roboquests.quests.QuestStage;
+import me.robotix.roboquests.playerdata.questprogress.QuestProgress;
 import me.robotix.roboquests.quests.utils.QuestState;
 
 import java.util.*;
@@ -10,14 +10,24 @@ import java.util.*;
  */
 public class PlayerData {
 
-    private final UUID playerUUID;
+    private final transient UUID playerUUID;
     private final Map<String, QuestState> questStates;
-    private final Map<String, QuestStage> activeQuestsProgress;
+    private final Map<String, QuestProgress> activeQuestsProgress;
 
     public PlayerData(UUID playerUUID) {
         this.playerUUID = playerUUID;
         this.questStates = new HashMap<>();
         this.activeQuestsProgress = new HashMap<>();
+    }
+
+    public QuestState getQuestState(String questID) {
+        return activeQuestsProgress.get(questID).getQuestState();
+    }
+
+    public void updateQuestState(String questID, QuestState newState) {
+        if (activeQuestsProgress.containsKey(questID)) {
+            activeQuestsProgress.get(questID).setQuestState(newState);
+        }
     }
 
     public UUID getPlayerUUID() {
@@ -28,24 +38,8 @@ public class PlayerData {
         return questStates;
     }
 
-    public Map<String, QuestStage> getActiveQuestsProgress() {
+    public Map<String, QuestProgress> getActiveQuestsProgress() {
         return activeQuestsProgress;
     }
 
-//    public void completeQuest(Quest quest) {
-//        completedQuests.add(quest.getID());
-//        activeQuests.remove(quest.getID());
-//    }
-//
-//    public void startQuest(Quest quest) {
-//        if (!activeQuests.containsKey(quest.getID()) && !completedQuests.contains(quest.getID())) {
-//            activeQuests.put(quest.getID(), new QuestProgress());
-//        }
-//    }
-//
-//    public void updateQuestProgress(Quest quest, int progress) {
-//        if (activeQuests.containsKey(quest.getID())) {
-//            activeQuests.get(quest.getID()).setProgress(progress);
-//        }
-//    }
 }

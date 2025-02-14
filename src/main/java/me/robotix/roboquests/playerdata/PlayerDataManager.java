@@ -2,6 +2,7 @@ package me.robotix.roboquests.playerdata;
 
 import static me.robotix.roboquests.utils.ConfigUtils.*;
 
+import me.robotix.roboquests.playerdata.questprogress.QuestProgress;
 import me.robotix.roboquests.quests.Quest;
 import me.robotix.roboquests.quests.QuestStage;
 import me.robotix.roboquests.quests.utils.QuestState;
@@ -101,7 +102,7 @@ public class PlayerDataManager {
      * @param quest The quest to search for its progress.
      * @return The QuestStage instance.
      */
-    public static QuestStage getPlayerQuestProgress(PlayerEntity player, Quest quest) {
+    public static QuestProgress getPlayerQuestProgress(PlayerEntity player, Quest quest) {
         UUID playerUUID = player.getUuid();
         PlayerData playerData = getPlayerData(playerUUID);
         return playerData.getActiveQuestsProgress().get(quest.getID());
