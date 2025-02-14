@@ -13,10 +13,10 @@ public class QuestStageProgress {
     private final Map<String, QuestTaskSetProgress> taskSetProgress = new HashMap<>();
 
     public QuestStageProgress(QuestStage questStage) {
-        this.stageID = questStage.stageID();
+        this.stageID = questStage.getStageID();
 
-        for (QuestTaskSet taskSet : questStage.taskSet()) {
-            taskSetProgress.put(taskSet.taskSetID(), new QuestTaskSetProgress(taskSet));
+        for (QuestTaskSet taskSet : questStage.getTaskSets()) {
+            taskSetProgress.put(taskSet.getTaskSetID(), new QuestTaskSetProgress(taskSet));
         }
     }
 

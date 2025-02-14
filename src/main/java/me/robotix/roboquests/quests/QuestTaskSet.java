@@ -53,6 +53,10 @@ public class QuestTaskSet {
         return taskRegistry.get(taskID);
     }
 
+    public List<QuestTask> getTasks() {
+        return tasks;
+    }
+
     public void rebuildQuestTaskRegistry() {
         taskRegistry = new HashMap<>();
 

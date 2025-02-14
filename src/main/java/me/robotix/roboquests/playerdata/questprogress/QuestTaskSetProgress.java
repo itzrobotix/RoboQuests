@@ -14,9 +14,9 @@ public class QuestTaskSetProgress {
     private final Map<String, QuestTaskProgress> taskProgress = new HashMap<>();
 
     public QuestTaskSetProgress(QuestTaskSet questTaskSet) {
-        this.taskSetID = questTaskSet.taskSetID();
+        this.taskSetID = questTaskSet.getTaskSetID();
 
-        for (QuestTask task : questTaskSet.tasks()) {
+        for (QuestTask task : questTaskSet.getTasks()) {
             taskProgress.put(task.taskID(), new QuestTaskProgress(task));
         }
     }

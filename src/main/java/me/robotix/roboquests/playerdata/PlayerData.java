@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class PlayerData {
 
-    private final transient UUID playerUUID;
+    private final UUID playerUUID;
     private final Map<String, QuestState> questStates;
     private final Map<String, QuestProgress> activeQuestsProgress;
 

@@ -22,7 +22,7 @@ public class QuestProgress {
         this.questState = initialState;
 
         for (QuestStage stage : quest.getStages()) {
-            questStageProgress.put(stage.stageID(), new QuestStageProgress(stage));
+            questStageProgress.put(stage.getStageID(), new QuestStageProgress(stage));
         }
     }
 

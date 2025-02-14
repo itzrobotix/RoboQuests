@@ -5,7 +5,7 @@ import me.robotix.roboquests.quests.QuestTask;
 
 public class QuestTaskProgress {
 
-    private final QuestTask questTask;
+    private final transient QuestTask questTask;
 
     private final String taskID;
     private int progress;

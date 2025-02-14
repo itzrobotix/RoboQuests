@@ -64,6 +64,10 @@ public class QuestStage {
         return taskSetRegistry.get(taskSetID);
     }
 
+    public List<QuestTaskSet> getTaskSets() {
+        return taskSet;
+    }
+
     public void rebuildQuestTaskSetRegistry() {
         taskSetRegistry = new HashMap<>();
 
