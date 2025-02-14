@@ -24,7 +24,7 @@ public class QuestTaskProgress {
         this.progress = progress + amount;
     }
 
-    public boolean isTaskCompleted() {
+    public boolean isCompleted() {
         return progress >= questTask.timesToComplete();
     }
 }

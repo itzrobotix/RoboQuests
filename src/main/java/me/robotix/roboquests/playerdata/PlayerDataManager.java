@@ -108,6 +108,10 @@ public class PlayerDataManager {
         return playerData.getActiveQuestsProgress().get(quest.getID());
     }
 
+    /**
+     * @param playerUUID The player's file to find.
+     * @return The PlayerData file.
+     */
     public static File getPlayerFile(UUID playerUUID) {
         return new File(getPlayerDataFolder().getPath() + playerUUID + ".json");
     }

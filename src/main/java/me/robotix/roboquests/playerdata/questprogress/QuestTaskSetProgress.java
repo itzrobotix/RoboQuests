@@ -21,9 +21,9 @@ public class QuestTaskSetProgress {
         }
     }
 
-    public boolean isTaskSetCompleted() {
+    public boolean isCompleted() {
         return taskProgress.values().stream()
-                .allMatch(QuestTaskProgress::isTaskCompleted);
+                .allMatch(QuestTaskProgress::isCompleted);
     }
 
     public String getTaskSetID() {

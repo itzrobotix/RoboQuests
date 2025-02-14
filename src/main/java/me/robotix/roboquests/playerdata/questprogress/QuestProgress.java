@@ -26,9 +26,9 @@ public class QuestProgress {
         }
     }
 
-    public boolean isQuestCompleted() {
+    public boolean isCompleted() {
         return questStageProgress.values().stream()
-                .allMatch(QuestStageProgress::isStageCompleted);
+                .allMatch(QuestStageProgress::isCompleted);
     }
 
     public Quest getQuest() {

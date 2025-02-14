@@ -20,9 +20,9 @@ public class QuestStageProgress {
         }
     }
 
-    public boolean isStageCompleted() {
+    public boolean isCompleted() {
         return taskSetProgress.values().stream()
-                .allMatch(QuestTaskSetProgress::isTaskSetCompleted);
+                .allMatch(QuestTaskSetProgress::isCompleted);
     }
 
     public String getStageID() {

@@ -5,6 +5,7 @@ import static me.robotix.roboquests.utils.ConfigUtils.*;
 
 import me.robotix.roboquests.playerdata.PlayerData;
 import me.robotix.roboquests.quests.utils.QuestState;
+import me.robotix.roboquests.utils.ConfigUtils;
 import net.minecraft.entity.player.PlayerEntity;
 
 import java.io.File;
@@ -227,11 +228,81 @@ public final class QuestManager {
     }
 
     /**
+     * Adds a QuestStage to a Quest and saves the file.
+     *
+     * @param quest The Quest instance.
+     * @param questStage The QuestStage instance to add.
+     * @return Returns true if QuestStage was added and saved successfully, else false.
+     */
+    public static boolean addQuestStage(Quest quest, QuestStage questStage) {
+        quest.addStage(questStage);
+        return saveQuest(quest);
+    }
+
+    /**
+     * Adds a QuestTaskSet to a QuestStage in a Quest and saves to file.
+     *
+     * @param quest The Quest instance.
+     * @param stageID The QuestStage ID to match to a QuestStage.
+     * @param questTaskSet The QuestTaskSet instance to add.
+     * @return True if QuestTaskSet was added and saved successfully, else false.
+     */
+    public static boolean addQuestTaskSet(Quest quest, String stageID, QuestTaskSet questTaskSet) {
+        QuestStage questStage = quest.getQuestStage(stageID);
+
+        if (questStage != null) {
+            questStage.addTaskSet(questTaskSet);
+            return saveQuest(quest);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Adds a QuestTask to a QuestTaskSet within a QuestStage in a Quest and saves to file.
+     *
+     * @param quest The Quest instance.
+     * @param stageID The QuestStage ID to match to a QuestStage.
+     * @param taskSetID The QuestTaskSet ID to match to a QuestTaskSet.
+     * @param questTask The QuestTask instance to add.
+     * @return True if QuestTaskSet was added and saved successfully, else false.
+     */
+    public static boolean addQuestTask(Quest quest, String stageID, String taskSetID, QuestTask questTask) {
+        QuestStage questStage = quest.getQuestStage(stageID);
+
+        if (questStage != null) {
+            QuestTaskSet questTaskSet = questStage.getTaskSet(taskSetID);
+
+            if (questTaskSet != null) {
+                questTaskSet.addTask(questTask);
+                return saveQuest(quest);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param quest The quest instance to save.
+     * @return True if quest saved successfully, else false.
+     */
+    public static boolean saveQuest(Quest quest) {
+        return ConfigUtils.saveToFile(getQuestFile(quest.getID()), quest);
+    }
+
+    /**
      * @param questID The Quest ID to match.
      * @return The Quest object if exists or null.
      */
     public static Quest getQuestByID(String questID) {
         return QUESTS.getOrDefault(questID, null);
+    }
+
+    /**
+     * @param questID The Quest file to find.
+     * @return The Quest file.
+     */
+    public static File getQuestFile(String questID) {
+        return new File(getQuestsFolder().getPath() + questID + ".json");
     }
 
     public static File getQuestsFolder() {
