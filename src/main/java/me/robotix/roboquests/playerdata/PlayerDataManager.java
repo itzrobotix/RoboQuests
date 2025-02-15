@@ -21,14 +21,15 @@ public class PlayerDataManager {
 
     private static final String PLAYER_DATA_FOLDER_PATH = getConfigsFolder() + "/playerdata";
 
-    private static final Map<UUID, PlayerData> PLAYERS_DATA = new HashMap<>();
+    private static final Map<UUID, PlayerData> PLAYERS_DATA_REGISTRY = new HashMap<>();
     private static final Map<UUID, Map<String, QuestState>> PLAYER_QUEST_STATE_REGISTRY = new HashMap<>();
 
     /**
      * Loads all player data JSON files.
      */
     public static void loadPlayerData() {
-        PLAYERS_DATA.clear();
+        PLAYERS_DATA_REGISTRY.clear();
+        PLAYER_QUEST_STATE_REGISTRY.clear();
 
         File[] files = getPlayerDataFolder().listFiles((dir, name) -> name.endsWith(".json"));
 
@@ -38,23 +39,7 @@ public class PlayerDataManager {
                 PlayerData playerData = loadFromFile(file, PlayerData.class);
 
                 if (playerData != null) {
-                    PLAYERS_DATA.put(playerUUID, playerData);
-                    playerData.getActiveQuestsProgress()
-                            .forEach((questID, questProgress) -> {
-                                Quest quest = getQuestByID(questID);
-
-                                if (quest != null) {
-                                    questProgress.linkQuest(quest);
-                                } else {
-                                    RoboQuests.LOGGER.error("Error: QuestID {} not found for player {}.", questID, playerUUID);
-                                }
-
-                                QuestState questState = playerData.getQuestState(questID);
-
-                                if (questState != null) {
-                                    questProgress.setQuestState(questState);
-                                }
-                            });
+                    PLAYERS_DATA_REGISTRY.put(playerUUID, playerData);
 
                     for (Map.Entry<String, QuestState> entry : playerData.getQuestStates().entrySet()) {
                         String questID = entry.getKey();
@@ -64,6 +49,17 @@ public class PlayerDataManager {
                                 .computeIfAbsent(playerUUID, k -> new HashMap<>())
                                 .put(questID, questState);
                     }
+
+                    playerData.getActiveQuestsProgress()
+                            .forEach((questID, questProgress) -> {
+                                Quest quest = getQuestByID(questID);
+
+                                if (quest != null) {
+                                    questProgress.linkQuest(quest);
+                                } else {
+                                    RoboQuests.LOGGER.error("Error: QuestID {} not found for player {}.", questID, playerUUID);
+                                }
+                            });
                 }
             }
         }
@@ -109,7 +105,7 @@ public class PlayerDataManager {
         boolean deleted = deleteFile(file);
 
         if (deleted) {
-            PLAYERS_DATA.remove(playerUUID);
+            PLAYERS_DATA_REGISTRY.remove(playerUUID);
         }
 
         return deleted;
@@ -130,7 +126,7 @@ public class PlayerDataManager {
      * Links the Quest instance to the corresponding QuestProgress instance.
      */
     public void linkQuestInstances() {
-        for (PlayerData playerData : PLAYERS_DATA.values()) {
+        for (PlayerData playerData : PLAYERS_DATA_REGISTRY.values()) {
             for (QuestProgress questProgress : playerData.getActiveQuestsProgress().values()) {
                 Quest quest = QuestManager.getQuestByID(questProgress.getQuestID());
 
@@ -154,10 +150,10 @@ public class PlayerDataManager {
     }
 
     public static PlayerData getPlayerData(UUID playerUUID) {
-        return PLAYERS_DATA.get(playerUUID);
+        return PLAYERS_DATA_REGISTRY.get(playerUUID);
     }
 
     public static Map<UUID, PlayerData> getPlayersData() {
-        return PLAYERS_DATA;
+        return PLAYERS_DATA_REGISTRY;
     }
 }
