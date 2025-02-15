@@ -17,7 +17,7 @@ public class Quest {
     private final List<String> questRewards = new ArrayList<>();
     private boolean isQuestRepeatable;
 
-    private transient Map<String, QuestStage> questStagesRegistry = new HashMap<>();
+    private final transient Map<String, QuestStage> questStagesRegistry = new HashMap<>();
 
     public Quest(String questID,
                  String questDisplayName,
@@ -76,11 +76,15 @@ public class Quest {
         }
     }
 
+    /**
+     * Rebuilds quest stages map registry and all nested map registries.
+     */
     public void rebuildQuestStagesRegistry() {
-        questStagesRegistry = new HashMap<>();
+        questStagesRegistry.clear();
 
         for (QuestStage questStage : questStages) {
             questStagesRegistry.put(questStage.getStageID(), questStage);
+            questStage.rebuildQuestTaskSetRegistry();
         }
     }
 

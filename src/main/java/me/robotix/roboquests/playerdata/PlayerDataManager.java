@@ -1,10 +1,11 @@
 package me.robotix.roboquests.playerdata;
 
 import static me.robotix.roboquests.utils.ConfigUtils.*;
+import static me.robotix.roboquests.quests.QuestManager.*;
 
 import me.robotix.roboquests.playerdata.questprogress.QuestProgress;
 import me.robotix.roboquests.quests.Quest;
-import me.robotix.roboquests.quests.QuestStage;
+import me.robotix.roboquests.quests.QuestManager;
 import me.robotix.roboquests.quests.utils.QuestState;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -37,6 +38,14 @@ public class PlayerDataManager {
 
                 if (playerData != null) {
                     PLAYERS_DATA.put(playerUUID, playerData);
+                    playerData.getActiveQuestsProgress()
+                            .forEach((questID, questProgress) -> {
+                                Quest quest = getQuestByID(questID);
+
+                                if (quest != null) {
+                                    questProgress.linkQuest(quest);
+                                }
+                            });
 
                     for (Map.Entry<String, QuestState> entry : playerData.getQuestStates().entrySet()) {
                         String questID = entry.getKey();
@@ -106,6 +115,21 @@ public class PlayerDataManager {
         UUID playerUUID = player.getUuid();
         PlayerData playerData = getPlayerData(playerUUID);
         return playerData.getActiveQuestsProgress().get(quest.getID());
+    }
+
+    /**
+     * Links the Quest instance to the corresponding QuestProgress instance.
+     */
+    public void linkQuestInstances() {
+        for (PlayerData playerData : PLAYERS_DATA.values()) {
+            for (QuestProgress questProgress : playerData.getActiveQuestsProgress().values()) {
+                Quest quest = QuestManager.getQuestByID(questProgress.getQuestID());
+
+                if (quest != null) {
+                    questProgress.linkQuest(quest);
+                }
+            }
+        }
     }
 
     /**

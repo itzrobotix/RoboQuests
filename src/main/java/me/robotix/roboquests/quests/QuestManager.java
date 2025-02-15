@@ -3,6 +3,7 @@ package me.robotix.roboquests.quests;
 import static me.robotix.roboquests.playerdata.PlayerDataManager.*;
 import static me.robotix.roboquests.utils.ConfigUtils.*;
 
+import me.robotix.roboquests.RoboQuests;
 import me.robotix.roboquests.playerdata.PlayerData;
 import me.robotix.roboquests.quests.utils.QuestState;
 import me.robotix.roboquests.utils.ConfigUtils;
@@ -25,6 +26,9 @@ public final class QuestManager {
      */
     public static void loadQuests() {
         QUESTS.clear();
+        createQuestsFolder();
+
+        int questsLoaded = 0;
 
         File[] files = getQuestsFolder().listFiles((dir, name) -> name.endsWith(".json"));
 
@@ -33,10 +37,15 @@ public final class QuestManager {
                 Quest quest = loadFromFile(file, Quest.class);
 
                 if (quest != null) {
+                    questsLoaded++;
+                    quest.rebuildQuestStagesRegistry();
                     QUESTS.put(quest.getID(), quest);
+                    RoboQuests.LOGGER.info("Loaded Quest: " + quest.getID());
                 }
             }
         }
+
+        RoboQuests.LOGGER.info(questsLoaded + " Quests Loaded Successfully!");
     }
 
     /**
@@ -294,7 +303,7 @@ public final class QuestManager {
      * @return The Quest object if exists or null.
      */
     public static Quest getQuestByID(String questID) {
-        return QUESTS.getOrDefault(questID, null);
+        return QUESTS.get(questID);
     }
 
     /**
@@ -303,6 +312,14 @@ public final class QuestManager {
      */
     public static File getQuestFile(String questID) {
         return new File(getQuestsFolder().getPath() + questID + ".json");
+    }
+
+    public static void createQuestsFolder() {
+        createDefaultFolder();
+
+        if (getQuestsFolder().mkdirs()) {
+            RoboQuests.LOGGER.info("Created directory " + getQuestsFolder().getName());
+        }
     }
 
     public static File getQuestsFolder() {

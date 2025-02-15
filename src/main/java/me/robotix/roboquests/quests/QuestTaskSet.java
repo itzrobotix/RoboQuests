@@ -16,7 +16,7 @@ public class QuestTaskSet {
     private final List<QuestTask> tasks = new ArrayList<>();
     private final List<QuestRequirement> taskSetRequirements = new ArrayList<>();
 
-    private transient Map<String, QuestTask> taskRegistry = new HashMap<>();
+    private final transient Map<String, QuestTask> taskRegistry = new HashMap<>();
 
     public QuestTaskSet(String taskSetID) {
         this.taskSetID = taskSetID;
@@ -58,7 +58,7 @@ public class QuestTaskSet {
     }
 
     public void rebuildQuestTaskRegistry() {
-        taskRegistry = new HashMap<>();
+        taskRegistry.clear();
 
         for (QuestTask questTask : tasks) {
             taskRegistry.put(questTask.taskID(), questTask);

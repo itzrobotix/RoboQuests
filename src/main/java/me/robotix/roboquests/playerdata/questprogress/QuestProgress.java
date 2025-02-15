@@ -9,21 +9,16 @@ import java.util.Map;
 
 public class QuestProgress {
 
-    private final transient Quest quest;
+    private transient Quest quest;
 
     private final String questID;
     private final Map<String, QuestStageProgress> questStageProgress = new HashMap<>();
 
     private QuestState questState;
 
-    public QuestProgress(Quest quest, QuestState initialState) {
-        this.quest = quest;
-        this.questID = quest.getID();
+    public QuestProgress(String questID, QuestState initialState) {
+        this.questID = questID;
         this.questState = initialState;
-
-        for (QuestStage stage : quest.getStages()) {
-            questStageProgress.put(stage.getStageID(), new QuestStageProgress(stage));
-        }
     }
 
     public boolean isCompleted() {
@@ -33,6 +28,10 @@ public class QuestProgress {
 
     public Quest getQuest() {
         return quest;
+    }
+
+    public void linkQuest(Quest quest) {
+        this.quest = quest;
     }
 
     public String getQuestID() {

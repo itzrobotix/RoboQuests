@@ -18,7 +18,7 @@ public class QuestStage {
     private final List<QuestTaskSet> taskSet = new ArrayList<>();
     private final List<QuestRequirement> stageRequirements = new ArrayList<>();
 
-    private transient Map<String, QuestTaskSet> taskSetRegistry = new HashMap<>();
+    private final transient Map<String, QuestTaskSet> taskSetRegistry = new HashMap<>();
 
     public QuestStage(String stageID, int stageOrder) {
         this.stageID = stageID;
@@ -60,20 +60,21 @@ public class QuestStage {
         }
     }
 
+    public void rebuildQuestTaskSetRegistry() {
+        taskSetRegistry.clear();
+
+        for (QuestTaskSet questTaskSet : taskSet) {
+            taskSetRegistry.put(questTaskSet.getTaskSetID(), questTaskSet);
+            questTaskSet.rebuildQuestTaskRegistry();
+        }
+    }
+
     public QuestTaskSet getTaskSet(String taskSetID) {
         return taskSetRegistry.get(taskSetID);
     }
 
     public List<QuestTaskSet> getTaskSets() {
         return taskSet;
-    }
-
-    public void rebuildQuestTaskSetRegistry() {
-        taskSetRegistry = new HashMap<>();
-
-        for (QuestTaskSet questTaskSet : taskSet) {
-            taskSetRegistry.put(questTaskSet.getTaskSetID(), questTaskSet);
-        }
     }
 
     public void addStageRequirement(QuestRequirement questRequirement) {
