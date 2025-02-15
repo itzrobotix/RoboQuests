@@ -93,7 +93,9 @@ public class ConfigUtils {
         return file;
     }
 
-    //Checks default mod folder exist and creates if missing.
+    /**
+     * Creates the default mod folder if it doesn't exist.
+     */
     public static void createDefaultFolder() {
         File file = getAbsolutePath(CONFIGS_FOLDER_PATH);
 
@@ -102,12 +104,20 @@ public class ConfigUtils {
         }
     }
 
-    //Returns file from the absolute path of specified file.
-    public static File getAbsolutePath(String directoryPath) {
-        return new File(Paths.get(new File("").getAbsolutePath()) + directoryPath);
-    }
-
+    /**
+     * @return The File instance of the mod folder.
+     */
     public static File getConfigsFolder() {
         return getAbsolutePath(CONFIGS_FOLDER_PATH);
+    }
+
+    /**
+     * Ensures path is an absolute path and not abstract.
+     *
+     * @param directoryPath The path to check is absolute.
+     * @return Instance of a File pulled from the absolute path.
+     */
+    public static File getAbsolutePath(String directoryPath) {
+        return new File(Paths.get(new File("").getAbsolutePath()) + directoryPath);
     }
 }

@@ -3,6 +3,7 @@ package me.robotix.roboquests.playerdata;
 import static me.robotix.roboquests.utils.ConfigUtils.*;
 import static me.robotix.roboquests.quests.QuestManager.*;
 
+import me.robotix.roboquests.RoboQuests;
 import me.robotix.roboquests.playerdata.questprogress.QuestProgress;
 import me.robotix.roboquests.quests.Quest;
 import me.robotix.roboquests.quests.QuestManager;
@@ -44,6 +45,14 @@ public class PlayerDataManager {
 
                                 if (quest != null) {
                                     questProgress.linkQuest(quest);
+                                } else {
+                                    RoboQuests.LOGGER.error("Error: QuestID {} not found for player {}.", questID, playerUUID);
+                                }
+
+                                QuestState questState = playerData.getQuestState(questID);
+
+                                if (questState != null) {
+                                    questProgress.setQuestState(questState);
                                 }
                             });
 
