@@ -29,7 +29,7 @@ public class ConfigUtils {
 
         try {
             if (file.createNewFile()) {
-                RoboQuests.LOGGER.info("File created " + file.getName());
+                RoboQuests.LOGGER.info("File created {}", file.getName());
             }
 
             try (Writer writer = new FileWriter(file)) {
@@ -57,14 +57,14 @@ public class ConfigUtils {
         file = ensureJsonFile(file);
 
         if (!file.exists()) {
-            RoboQuests.LOGGER.error("File " + file.getName() + " not found!");
+            RoboQuests.LOGGER.error("File {} not found!", file.getName());
             return null;
         }
 
         try (FileReader reader = new FileReader(file)) {
             return GSON.fromJson(reader, clazz);
         } catch (IOException e) {
-            RoboQuests.LOGGER.error("Error loading data from file " + file.getName());
+            RoboQuests.LOGGER.error("Error loading data from file {}", file.getName());
             return null;
         }
     }
@@ -100,7 +100,7 @@ public class ConfigUtils {
         File file = getAbsolutePath(CONFIGS_FOLDER_PATH);
 
         if (file.mkdirs()) {
-            RoboQuests.LOGGER.info("Created directory " + file.getName());
+            RoboQuests.LOGGER.info("Created directory {}", file.getName());
         }
     }
 

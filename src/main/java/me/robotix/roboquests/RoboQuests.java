@@ -21,7 +21,7 @@ public class RoboQuests implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		LOGGER.info(MOD_NAME + " has loaded successfully!");
+		LOGGER.info(MOD_NAME + " " + MOD_VERSION + " has loaded successfully!");
 
 		CommandRegistrationCallback.EVENT.register
 				((commandDispatcher,

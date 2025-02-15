@@ -40,12 +40,12 @@ public final class QuestManager {
                     questsLoaded++;
                     quest.rebuildQuestStagesRegistry();
                     QUESTS.put(quest.getID(), quest);
-                    RoboQuests.LOGGER.info("Loaded Quest: " + quest.getID());
+                    RoboQuests.LOGGER.info("Loaded Quest: {}", quest.getID());
                 }
             }
         }
 
-        RoboQuests.LOGGER.info(questsLoaded + " Quests Loaded Successfully!");
+        RoboQuests.LOGGER.info("{} Quests Loaded Successfully!", questsLoaded);
     }
 
     /**
@@ -318,7 +318,7 @@ public final class QuestManager {
         createDefaultFolder();
 
         if (getQuestsFolder().mkdirs()) {
-            RoboQuests.LOGGER.info("Created directory " + getQuestsFolder().getName());
+            RoboQuests.LOGGER.info("Created directory {}", getQuestsFolder().getName());
         }
     }
 
