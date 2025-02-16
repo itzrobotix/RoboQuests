@@ -33,7 +33,7 @@ public class PlayerData {
     }
 
     /**
-     * Updates the QuestState for a Quest.
+     * Updates the QuestState for a Quest and handles all logic for QuestProgress.
      *
      * @param questID The Quest ID to match to the Quest.
      * @param newState The new QuestState to pass to the Quest.
