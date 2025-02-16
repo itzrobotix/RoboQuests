@@ -32,4 +32,8 @@ public class QuestStageProgress {
     public QuestTaskSetProgress getTaskSetProgress(String taskSetID) {
         return taskSetProgress.get(taskSetID);
     }
+
+    public Map<String, QuestTaskSetProgress> getTaskSetProgress() {
+        return taskSetProgress;
+    }
 }

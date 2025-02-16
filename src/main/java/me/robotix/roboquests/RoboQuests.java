@@ -1,5 +1,6 @@
 package me.robotix.roboquests;
 
+import me.robotix.roboquests.command.QuestCommand;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -23,19 +24,6 @@ public class RoboQuests implements ModInitializer {
 	public void onInitialize() {
 		LOGGER.info(MOD_NAME + " " + MOD_VERSION + " has loaded successfully!");
 
-		CommandRegistrationCallback.EVENT.register
-				((commandDispatcher,
-				  commandRegistryAccess,
-				  registrationEnvironment) -> {
-			if (registrationEnvironment.dedicated) {
-				commandDispatcher.register(CommandManager.literal("quest")
-						.executes(context -> {
-							context.getSource().sendFeedback(() -> Text.literal
-											("This command is gonna do funky stuff soon!"),
-									false);
-							return 1;
-						}));
-			}
-		});
+		QuestCommand.register();
 	}
 }

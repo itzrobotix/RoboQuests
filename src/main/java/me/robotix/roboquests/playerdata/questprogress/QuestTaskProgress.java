@@ -16,6 +16,8 @@ public class QuestTaskProgress {
         this.progress = 0;
     }
 
+    public QuestTask getQuestTask() { return questTask; }
+
     public String getTaskID() {
         return taskID;
     }

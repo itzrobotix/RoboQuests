@@ -307,6 +307,13 @@ public final class QuestManager {
     }
 
     /**
+     * @return The set of Quest ID keys in the QUESTS map.
+     */
+    public static Set<String> getAllQuestIDs() {
+        return QUESTS.keySet();
+    }
+
+    /**
      * @param questID The Quest file to find.
      * @return The Quest file.
      */

@@ -34,4 +34,8 @@ public class QuestTaskSetProgress {
         return taskProgress.get(taskID);
     }
 
+    public Map<String, QuestTaskProgress> getTaskProgress() {
+        return taskProgress;
+    }
+
 }
